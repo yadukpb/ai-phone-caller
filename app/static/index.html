@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Callroom · AI Phone Caller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">◒</span><span>callroom</span></div>
+        <div class="eyebrow">Control plane</div>
+        <nav>
+          <button class="nav-item active" data-view="overview"><span>◈</span> Overview</button>
+          <button class="nav-item" data-view="calls"><span>◌</span> Calls <b id="nav-call-count">0</b></button>
+          <button class="nav-item" data-view="campaigns"><span>⌁</span> Campaigns</button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="status-card"><span class="pulse"></span><div><strong id="mode-label">Dry run mode</strong><small id="provider-label">Checking connection…</small></div></div>
+          <button class="settings-button" id="api-key-button">⌘ API key</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar"><div><div class="eyebrow">Workspace / outbound</div><h1 id="page-title">Good morning, operator</h1></div><button class="primary" id="new-call-button">＋ New call</button></header>
+        <div id="toast" class="toast" role="status"></div>
+
+        <section id="overview-view" class="view">
+          <div class="hero"><div><div class="eyebrow warm">VOICE AGENT OPERATIONS</div><h2>Make every conversation<br /><em>feel intentional.</em></h2><p>Launch, monitor, and learn from your outbound calls in one calm workspace.</p></div><div class="hero-orbit"><div class="orbit-dot"></div><span>AI<br />LIVE</span></div></div>
+          <div class="metric-grid"><article class="metric"><span>Total calls</span><strong id="metric-total">—</strong><small>All recorded jobs</small></article><article class="metric"><span>In progress</span><strong id="metric-active">—</strong><small class="green-text">● Live activity</small></article><article class="metric"><span>Completed</span><strong id="metric-completed">—</strong><small>Successful calls</small></article><article class="metric"><span>Opt-outs</span><strong id="metric-optouts">—</strong><small>Respecting preferences</small></article></div>
+          <div class="section-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h3>Latest calls</h3></div><button class="text-button" data-view-link="calls">View all calls →</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Contact</th><th>Agent</th><th>Started</th><th>Status</th><th></th></tr></thead><tbody id="recent-calls"><tr><td colspan="5" class="empty">Loading activity…</td></tr></tbody></table></div>
+        </section>
+
+        <section id="calls-view" class="view hidden"><div class="section-heading"><div><div class="eyebrow">CALL LOG</div><h2>All calls</h2></div><button class="secondary" id="refresh-calls">↻ Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Contact</th><th>Agent</th><th>Model</th><th>Status</th><th>Call ID</th></tr></thead><tbody id="all-calls"><tr><td colspan="5" class="empty">Loading calls…</td></tr></tbody></table></div></section>
+
+        <section id="campaigns-view" class="view hidden"><div class="section-heading"><div><div class="eyebrow">OUTBOUND PROGRAMS</div><h2>Campaigns</h2></div><button class="secondary" id="refresh-campaigns">↻ Refresh</button></div><div id="campaign-list" class="campaign-list"><div class="empty-card">No campaigns loaded yet.</div></div></section>
+      </main>
+    </div>
+
+    <dialog id="call-dialog"><form method="dialog" id="call-form"><div class="dialog-head"><div><div class="eyebrow">NEW OUTBOUND CALL</div><h2>Start a conversation</h2></div><button class="close" value="cancel">×</button></div><label>Phone number<input name="phone_number" placeholder="+919999999999" required /></label><label>Agent ID<input name="agent_id" value="default-agent" required /></label><label>Voice model<select name="tts_model"><option value="qwen3-tts-0.6b">Qwen 0.6B · fast</option><option value="qwen3-tts-1.7b">Qwen 1.7B · expressive</option></select></label><label>Call brief<textarea name="prompt" rows="4" placeholder="What should the agent say and learn?" required></textarea></label><div class="dialog-actions"><button class="secondary" value="cancel">Cancel</button><button class="primary" value="default">Queue call</button></div></form></dialog>
+    <dialog id="key-dialog"><form method="dialog" id="key-form"><div class="dialog-head"><div><div class="eyebrow">ACCESS</div><h2>API key</h2></div><button class="close" value="cancel">×</button></div><p class="muted">Only needed when API_KEY is enabled on the server. Stored locally in this browser.</p><label>Key<input id="api-key-input" type="password" autocomplete="off" /></label><div class="dialog-actions"><button class="primary" value="default">Save key</button></div></form></dialog>
+    <script src="/app.js"></script>
+  </body>
+</html>

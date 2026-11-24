@@ -1,8 +1,10 @@
 import asyncio
 import json
 from uuid import uuid4
+from pathlib import Path
 
 from fastapi import BackgroundTasks, Depends, FastAPI, Header, HTTPException, Query
+from fastapi.staticfiles import StaticFiles
 
 from .config import get_settings
 from .schemas import (AddContactRequest, CallResponse, CallStatus, CreateCallRequest,
@@ -170,3 +172,7 @@ async def attach_recording(call_id: str, request: RecordingRequest) -> dict:
         raise HTTPException(status_code=404, detail="Call not found")
     store.attach_recording(call_id, request.recording_url, request.duration_seconds)
     return store.get(call_id) or {}
+
+
+# Keep the operator dashboard in the same deployment as the control plane.
+app.mount("/", StaticFiles(directory=Path(__file__).parent / "static", html=True), name="ui")
